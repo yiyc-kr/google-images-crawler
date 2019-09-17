@@ -1,4 +1,4 @@
-# selenium-crawler
+# google-images-crawler
 
 ## Requirements
 
@@ -6,12 +6,6 @@
 
 ```
 $ pip install selenium
-```
-
-### Install beautifulsoup4
-
-```
-$ pip install bs4
 ```
 
 ### Install Webdriver
@@ -33,5 +27,11 @@ $ chmod +x geckodriver
 ```
 
 5. move the geckodriver binary to /usr/local/bin or any location on your system PATH.
+
+### Install beautifulsoup4
+
+```
+$ pip install bs4
+```
 
 
