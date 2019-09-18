@@ -1,3 +1,8 @@
 {
-    "keywords": "beef meat"
+    "keyword": "beef meat belly pork taste good",
+    "blacklist": "alibaba, china, .cn",
+    "output_directory": "~/images",
+    "id": "000001",
+    "limit": 20,
+    "word_slice": 3
 }
