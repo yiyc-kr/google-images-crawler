@@ -132,7 +132,6 @@ class googleimagescrawler:
                 extensions = [".jpg", ".jpeg", ".gif", ".png", ".bmp", ".svg", ".webp", ".ico"]
                 # keep everything after the last '/'
                 image_name = str(image_url[(image_url.rfind('/')) + 1:])
-                image_name = search_term + image_name[image_name.rfind("."):]
                 if format:
                     if not image_format or image_format != format:
                         download_status = 'fail'
@@ -150,6 +149,7 @@ class googleimagescrawler:
                 elif image_name.lower().find("." + image_format) < 0:
                     image_name = image_name + "." + image_format
                 else:
+                    image_name = search_term + image_name[image_name.lower().rfind("." + image_format):]
                     image_name = image_name[:image_name.lower().find("." + image_format) + (len(image_format) + 1)]
 
                 # prefix name in image
@@ -161,8 +161,8 @@ class googleimagescrawler:
                 if no_numbering:
                     path = main_directory + "/" + dir_name + "/" + prefix + image_name
                 else:
-                    image_name = image_name[:image_name.find("." + image_format)] + "#" + str(count)\
-                                 + image_name[image_name.find("." + image_format):]
+                    image_name = image_name[:image_name.lower().find("." + image_format)] + "#" + str(count)\
+                                 + image_name[image_name.lower().find("." + image_format):]
                     path = main_directory + "/" + dir_name + "/" + image_name
 
                 try:
@@ -338,7 +338,7 @@ class googleimagescrawler:
 
         if arguments['word_slice']:
             word_slice = int(arguments['word_slice'])
-            if len(keyword.split()) <= word_slice:
+            if len(keyword.split()) < word_slice:
                 raise ValueError("word_slice should be lower than keyword's word counts("
                                  + str(len(keyword.split())) + ")")
             else:
@@ -356,7 +356,8 @@ class googleimagescrawler:
             else:
                 print("TODO")   # TODO: download_page using selenium
 
-            print("[ " + keyword + " ] Starting Download... [ " + search_term + " ]")
+            if not arguments["silent_mode"]:
+                print("[ " + keyword + " ] Starting Download... [ " + search_term + " ]")
 
             items, errorCount, abs_path = self._get_all_items(raw_html, main_directory, id, limit, blacklist,
                                 search_term, arguments)
